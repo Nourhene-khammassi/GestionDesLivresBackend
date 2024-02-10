@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<style>
+	.btn-group .btn-custom-blue {
+		background-color: #1AA7EC;
+		border-color: #1AA7EC;
+		color: floralwhite;
+	}
+
+	
+	.btn-group .btn-custom-purple {
+  background-color: #797EF6;
+  border-color: #797EF6;
+  color: floralwhite;
+}
+
+</style>
+<head>
+    <meta charset="utf-8">
+    <title>Liste des Genres</title>
+</head>
+<body>
+    <div th:replace="template"></div>
+    <div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            Liste des Genres
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Actions</th>
+                </tr> 
+                <tr th:each="genre:${genres}">
+                    <td th:text="${genre.idGen}"></td>
+                    <td th:text="${genre.nomGen}"></td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-custom-blue rounded mr-2" th:href="@{editerGenre(id=${genre.idGen})}">Modifier</a>
+                            <a class="btn btn-custom-purple rounded ml-2" onclick="return confirm('Etes-vous sûr ?')" th:href="@{/supprimerGenre(id=${genre.idGen})}">
+                                Supprimer
+                            </a>
+                        </div>
+                    </td>
+                </tr> 
+            </table>
+            <!--<div class="d-flex justify-content-end">
+                <a class="btn btn-success" th:href="@{/ajouterGenre}">Ajouter un genre</a>
+            </div>-->
+        </div>
+    </div>
+</div>
+</body>
+</html>

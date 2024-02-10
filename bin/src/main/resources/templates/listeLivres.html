@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<style>
+	.btn-group .btn-custom-blue {
+		background-color: #1AA7EC;
+		border-color: #1AA7EC;
+		color: floralwhite;
+	}
+
+	
+	.btn-group .btn-custom-purple {
+  background-color: #797EF6;
+  border-color: #797EF6;
+  color: floralwhite;
+}
+
+</style>
+
+<head>
+	<meta charset="utf-8">
+	<title>Liste des Livres</title>
+</head>
+
+<body>
+	<div th:replace="template"></div>
+	<div class="container mt-5">
+		<div class="card">
+			<div class="card-header">
+				Liste des Livres
+				<!--<a class="btn btn-success float-right" th:href="@{/showCreate}">Ajouter un livre</a>-->
+
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<tr>
+							<th>ID</th>
+							<th>Titre</th>
+							<th>Auteur</th>
+							<th>Genre</th>
+							<th>Date de publication</th>
+							<th>Prix</th>
+							<th>Quantité en Stock</th>
+							<th>Actions</th>
+
+						</tr>
+						<tr th:each="livre:${livres.content}">
+							<td th:text="${livre.idLivre}"></td>
+							<td th:text="${livre.titreLivre}"></td>
+							<td th:text="${livre.auteurLivre}"></td>
+							<td th:text="${livre.genre?.nomGen}"></td>
+							<td th:text="${livre.datePublication}"></td>
+							<td th:text="${livre.prixLivre}"></td>
+							<td th:text="${livre.quantiteStock}"></td>
+							<td>
+								<div class="btn-group">
+									<a class="btn btn-custom-blue rounded mr-2"
+										th:href="@{modifierLivre(id=${livre.idLivre})}">Modifier</a>
+									<a class="btn btn-custom-purple rounded ml-2" onclick="return confirm('Etes-vous sûr ?')"
+										th:href="@{/supprimerLivre(id=${livre.idLivre},page=${currentPage},size=${size})}">
+										Supprimer
+									</a>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<ul class="nav nav-pills">
+					<li th:each="page,status:${pages}">
+						<a th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+							th:href="@{ listeLivres(page=${status.index}, size=${size} ) }"
+							th:text="${status.index }"></a>
+					</li>
+				</ul>
+
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
